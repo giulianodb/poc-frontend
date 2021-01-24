@@ -9,7 +9,7 @@ import Content from '../common/template/content'
 import ContentHeader from '../common/template/contentHeader'
 import Message from '../common/msg/messages'
 
-const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com:81/personnes'
+const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com:81/uploadFile'
 // const URL = 'http://localhost:8081/personnes/uploadFile'
 
 export default class PersonneUpload extends Component {
