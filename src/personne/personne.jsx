@@ -10,8 +10,8 @@ import ContentHeader from '../common/template/contentHeader'
 import Row from  '../common/layout/row'
 import Message from '../common/msg/messages'
 
-// const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com/personnes'
-const URL = 'http://localhost:8081/personnes'
+const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com:81/personnes'
+// const URL = 'http://localhost:8081/personnes'
 
 export default class Personne extends Component {
    

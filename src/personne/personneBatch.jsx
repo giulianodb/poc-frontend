@@ -8,8 +8,8 @@ import PersonneList from './personneList'
 import Content from '../common/template/content'
 import ContentHeader from '../common/template/contentHeader'
 
-// const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com/personnes'
-const URL = 'http://localhost:8081/personnes/batch'
+const URL = 'http://ec2-3-16-152-3.us-east-2.compute.amazonaws.com:81/personnes'
+// const URL = 'http://localhost:8081/personnes/batch'
 
 export default class PersonneUpload extends Component {
  
