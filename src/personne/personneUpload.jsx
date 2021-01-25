@@ -26,41 +26,53 @@ constructor(props) {
   
 }
 onFileChange (event) { 
-     
-   // Update the state 
    this.setState({ selectedFile: event.target.files[0] }); 
-  
  }
 
  onFileUpload () { 
    const self = this
-   // Create an object of formData 
    const formData = new FormData(); 
   
-   // Update the formData object 
-   formData.append( 
-     "file", 
-     this.state.selectedFile, 
-     this.state.selectedFile.name 
-   ); 
-  
-   // Details of the uploaded file 
-   console.log(this.state.selectedFile); 
-  
-   // Request made to the backend api 
-   // Send formData object 
-   axios.post(URL, formData).then(resp=>{ 
-      this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  
-      mostrarMessage:true, message:'Fichier envoyé avec succès', iconeMessage: 'con fa fa-info'})
+    if (this.state.selectedFile == null){
+      this.setState({...this.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:'Sélectionnez un fichier.', iconeMessage: 'con fa fa-danger'})
+      this.fermerMessage()
+    } else {
 
-   }).catch(function (error) {
-      var message = "Erreur"
-      if(error !== undefined && error.response !== undefined && error.response.data.message != null){
-         message = error.response.data.message
-      }
-      self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
-   }); 
+   formData.append( 
+    "file", 
+    this.state.selectedFile, 
+    this.state.selectedFile.name 
+  ); 
+ 
+  // Details of the uploaded file 
+  console.log(this.state.selectedFile); 
+ 
+  // Request made to the backend api 
+  // Send formData object 
+  axios.post(URL, formData).then(resp=>{ 
+     this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  
+     mostrarMessage:true, message:'Fichier envoyé avec succès', iconeMessage: 'con fa fa-info'})
+     this.fermerMessage()
+
+  }).catch(function (error) {
+     var message = "Erreur"
+     if(error !== undefined && error.response !== undefined && error.response.data.message != null){
+        message = error.response.data.message
+     }
+     self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
+     self.fermerMessage()
+  }); 
+    }
+
+
  }
+
+ fermerMessage(){
+  const self = this
+setTimeout( function() {
+   self.setState({...this.state,mostrarMessage:false})
+ }, 3000 );
+}
 
  handleMostrarMessages(e){
    this.setState({...this.state, mostrarMessage: e})

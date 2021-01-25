@@ -18,7 +18,7 @@ export default class Personne extends Component {
 constructor(props) {
    super (props)
 
-   this.state = {nom:'',cpf:'',id:'',valorBotao:'Salvar', events:[],classeDivMsg:'alert alert-info alert-dismissible',classeBotao:'btn btn-primary'}
+   this.state = {nom:'',cpf:'',id:'',valorBotao:'Enregistrer', events:[],classeDivMsg:'alert alert-info alert-dismissible',classeBotao:'btn btn-primary'}
    
    this.handleAdd = this.handleAdd.bind(this)
    this.handleChangeCpf = this.handleChangeCpf.bind(this)
@@ -34,7 +34,7 @@ constructor(props) {
       var self = this;
       axios.get(URL)
        .then(function (response) {
-         self.setState({events: response.data, id:'', cpf:'', nom:'', valorBotao:'Salvar', classeBotao:'btn btn-primary',displayMessage:'display: none;'})
+         self.setState({events: response.data, id:'', cpf:'', nom:'', valorBotao:'Enregistrer', classeBotao:'btn btn-primary',displayMessage:'display: none;'})
        })
       .catch(function (error) {
          console.log(error);
@@ -48,8 +48,8 @@ constructor(props) {
          axios.put(`${URL}/${this.state.id}`, {'nom':this.state.nom,'cpf':this.state.cpf})
          .then (resp => {
             this.refresh() 
-            this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'Succès en modifiant', iconeMessage: 'con fa fa-info'})
-
+            this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'L\'inscription a été modifiée avec succès', iconeMessage: 'con fa fa-info'})
+            this.fermerMessage()
             this.refresh() 
          })
          .catch(function (error) {
@@ -57,7 +57,9 @@ constructor(props) {
             if(error !== undefined && error.response !== undefined && error.response.data.message != null){
                message = error.response.data.message
             }
+            console.log(error)
             self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
+            self.fermerMessage()
          });
    
       } else if(this.state.id !== '' && this.state.valorBotao === 'Deletar'){
@@ -65,8 +67,9 @@ constructor(props) {
          axios.delete(`${URL}/${this.state.id}`)
          .then (resp => {
             this.refresh() 
-            this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'Succès lors de la suppression', iconeMessage: 'con fa fa-info'})
-            this.refresh() 
+            this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'L\'inscription a été supprimée avec succès', iconeMessage: 'con fa fa-info'})
+            this.refresh()
+            this.fermerMessage()
          })
          .catch(function (error) {
             var message = "Erreur lors de la suppression"
@@ -75,6 +78,7 @@ constructor(props) {
             }
 
             self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
+            self.fermerMessage()
          });
       }
       else {
@@ -82,7 +86,7 @@ constructor(props) {
          .then (resp => {
             this.refresh() 
             this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'Réussite à l’insertion', iconeMessage: 'con fa fa-info'})
-   
+            this.fermerMessage()
          })
          .catch(function (error) {
             var message = "Erreur lors de l’insertion"
@@ -90,21 +94,25 @@ constructor(props) {
                message = error.response.data.message
             }
             self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
+            self.fermerMessage()
          });
       }
-
-
      
    }
    iniciarUpdate(teste){
-      this.setState({...this.state, nom:teste.nom, cpf:teste.cpf, id:teste.id, valorBotao:'Alterar', classeBotao:'btn btn-primary'})
+      this.setState({...this.state, nom:teste.nom, cpf:teste.cpf, id:teste.id, valorBotao:'Changer', classeBotao:'btn btn-primary'})
    }
 
    iniciarDelete(teste){
-      this.setState({...this.state, nom:teste.nom, cpf:teste.cpf, id:teste.id, valorBotao:'Deletar', classeBotao:'btn btn-danger'})
+      this.setState({...this.state, nom:teste.nom, cpf:teste.cpf, id:teste.id, valorBotao:'Supprimer', classeBotao:'btn btn-danger'})
    }
 
-  
+  fermerMessage(){
+     const self = this
+   setTimeout( function() {
+      self.setState({...this.state,mostrarMessage:false})
+    }, 3000 );
+  }
 
    handleChangeNom(e){
       this.setState({...this.state, nom: e.target.value})
@@ -117,19 +125,16 @@ constructor(props) {
    handleMostrarMessages(e){
       this.setState({...this.state, mostrarMessage: e})
    }
-
   
    render (){
-
          return (
             <Content>
-               
             { this.state.mostrarMessage && 
             
                <Message classeDivMsg={this.state.classeDivMsg} 
                      message={this.state.message} 
                      handleMostrarMessages={this.handleMostrarMessages}
-                     iconeMessage={this.state.iconeMessage}                      />}
+                     iconeMessage={this.state.iconeMessage} />}
 
          <div className="box box-primary">  
             <ContentHeader title='Personnes' small='Versão 1.0' />

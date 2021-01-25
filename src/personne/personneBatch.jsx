@@ -32,15 +32,16 @@ export default class PersonneUpload extends Component {
   const self = this
     axios.post(URL).then(respo => {
       this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  
-          mostrarMessage:true, message:'Succès lors du démarrage du batch', iconeMessage: 'con fa fa-info'})
-      
+          mostrarMessage:true, message:'Batch a été exécuté avec succès', iconeMessage: 'con fa fa-info'})
       this.prendreDernierBatch()
+      this.fermerMessage()
     }) .catch(function (error) {
       var message = "Erreur"
       if(error !== undefined && error.response !== undefined && error.response.data.message != null){
          message = error.response.data.message
       }
       self.setState({...self.state, classeDivMsg:'alert alert-danger alert-dismissible',  mostrarMessage:true, message:message, iconeMessage: 'con fa fa-danger'})
+      self.fermerMessage()
    });
  }
 
@@ -57,6 +58,13 @@ export default class PersonneUpload extends Component {
   let dataFormatada = ((data.getDate() )) + "/" + ((data.getMonth() + 1)) + "/" + data.getFullYear() +" - "+data.getHours()+":"+data.getMinutes()+":"+data.getSeconds();                  
  return dataFormatada
  }
+
+ fermerMessage(){
+  const self = this
+setTimeout( function() {
+   self.setState({...this.state,mostrarMessage:false})
+ }, 3000 );
+}
 
  handleMostrarMessages(e){
   this.setState({...this.state, mostrarMessage: e})
