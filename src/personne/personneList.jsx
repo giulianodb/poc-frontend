@@ -15,8 +15,8 @@ class PersoneList extends Component {
                  <td>{cpfMask(todo.cpf)}</td>
 
                  <td>
-                     <button className='btn btn-warning'  title="Hello World!" onClick={()=> this.props.iniciarUpdate(todo)}><i className='fa fa-pencil'/> </button>
-                     <button className='btn btn-danger' title="Hello World!" onClick={()=> this.props.iniciarDelete(todo)}><i className='fa fa-trash'/> </button>
+                     <button className='btn btn-warning'  onClick={()=> this.props.iniciarUpdate(todo)}><i className='fa fa-pencil'/> </button>
+                     <button className='btn btn-danger'  onClick={()=> this.props.iniciarDelete(todo)}><i className='fa fa-trash'/> </button>
                  </td>
                  </tr>
             
@@ -32,9 +32,9 @@ class PersoneList extends Component {
                             <th>Nom</th>
                         
                         
-                            <th>Cpf</th>
+                            <th>CPF</th>
 
-                            <th className='table-actions'>Ações</th>
+                            <th className='table-actions'>Actions</th>
                         </tr>
                         
                     </thead>

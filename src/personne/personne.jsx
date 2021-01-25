@@ -43,11 +43,10 @@ constructor(props) {
 
    handleAdd(){
       const self = this
-      if(this.state.id !== '' && this.state.valorBotao !== 'Deletar'){
+      if(this.state.id !== '' && this.state.valorBotao !== 'Supprimer'){
          console.log(`${URL}/${this.state.id}`)
          axios.put(`${URL}/${this.state.id}`, {'nom':this.state.nom,'cpf':this.state.cpf})
          .then (resp => {
-            this.refresh() 
             this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'L\'inscription a été modifiée avec succès', iconeMessage: 'con fa fa-info'})
             this.fermerMessage()
             this.refresh() 
@@ -62,11 +61,10 @@ constructor(props) {
             self.fermerMessage()
          });
    
-      } else if(this.state.id !== '' && this.state.valorBotao === 'Deletar'){
+      } else if(this.state.id !== '' && this.state.valorBotao === 'Supprimer'){
          console.log(`${URL}/${this.state.id}`)
          axios.delete(`${URL}/${this.state.id}`)
          .then (resp => {
-            this.refresh() 
             this.setState({...this.state, classeDivMsg:'alert alert-info alert-dismissible',  mostrarMessage:true, message:'L\'inscription a été supprimée avec succès', iconeMessage: 'con fa fa-info'})
             this.refresh()
             this.fermerMessage()
@@ -137,7 +135,7 @@ constructor(props) {
                      iconeMessage={this.state.iconeMessage} />}
 
          <div className="box box-primary">  
-            <ContentHeader title='Personnes' small='Versão 1.0' />
+            <ContentHeader title='Personnes' small='Version 1.0' />
                      <PersonneCreate handleAdd={this.handleAdd} classeBotao={this.state.classeBotao} nom={this.state.nom} handleChangeCpf={this.handleChangeCpf} handleChangeNom={this.handleChangeNom} cpf={this.state.cpf} valorBotao={this.state.valorBotao}/>
          </div>
          <div className="box">  
